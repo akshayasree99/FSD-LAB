@@ -1,60 +1,66 @@
-<html> 
-<head> 
-       <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Weather Data Visualization</title> 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
-</head> 
-<body> 
-    <h1>Weather Data Visualization</h1> 
-    <canvas id="weatherChart"></canvas> 
-     
-    <script> 
-        const apiKey = '5ab8ace32cc38205ab1bfe55b66828a6';
-        const city = 'New York'; 
- 
-        // Fetch weather data using async/await 
-        const fetchWeatherData = async (city) => { 
-try { 
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`); 
-    const data = await response.json(); 
-                return data; 
-            } catch (error) { 
-                console.error('Error fetching weather data:', error); 
-            } 
-        }; 
- 
-        // Process and display data using promises 
-        const processWeatherData = (data) => { 
-            return new Promise((resolve) => { 
-                const labels = data.list.slice(0, 5).map(entry => entry.dt_txt); 
-                const temperatures = data.list.slice(0, 5).map(entry => entry.main.temp); 
-                resolve({ labels, temperatures }); 
-            }); 
-        }; 
- 
-        // Render chart using Chart.js 
-        const renderChart = ({ labels, temperatures }) => { 
-            const ctx = document.getElementById('weatherChart').getContext('2d'); 
-            new Chart(ctx, { 
-                type: 'line', 
-                data: { 
-                    labels, 
-                    datasets: [{ 
-                        label: 'Temperature (°C)', 
-                        data: temperatures, 
-   borderColor: 'blue', 
-                        fill: false 
-                    }] 
-                } 
-            }); 
-        }; 
- 
-        // Fetch, process, and display weather data 
-        fetchWeatherData(city) 
-            .then(processWeatherData) 
-            .then(renderChart) 
-            .catch(error => console.error('Error:', error)); 
-    </script> 
-</body> 
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>Weather Data Visualization</h1>
+    <canvas id="weatherChart"></canvas>
+
+    <script>
+      const apiKey = "5ab8ace32cc38205ab1bfe55b66828a6";
+      const city = "New York";
+
+      // Fetch weather data using async/await
+      const fetchWeatherData = async (city) => {
+        try {
+          const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`
+          );
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+        }
+      };
+
+      // Process and display data using promises
+      const processWeatherData = (data) => {
+        return new Promise((resolve) => {
+          const labels = data.list.slice(0, 5).map((entry) => entry.dt_txt);
+          const temperatures = data.list
+            .slice(0, 5)
+            .map((entry) => entry.main.temp);
+          resolve({ labels, temperatures });
+        });
+      };
+
+      // Render chart using Chart.js
+      const renderChart = ({ labels, temperatures }) => {
+        const ctx = document.getElementById("weatherChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Temperature (°C)",
+                data: temperatures,
+                borderColor: "blue",
+                fill: false,
+              },
+            ],
+          },
+        });
+      };
+
+      // Fetch, process, and display weather data
+      fetchWeatherData(city)
+        .then(processWeatherData)
+        .then(renderChart)
+        .catch((error) => console.error("Error:", error));
+    </script>
+  </body>
 </html>

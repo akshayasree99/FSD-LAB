@@ -15,3 +15,7 @@
         <year>2020</year> 
     </book> 
 </bookstore> 
+
+Execution step in command line promot 
+C:>xmllint --noout --dtdvalid bookstore.dtd bookstore.xml 
+C:> >xmllint --noout --schema bookstore.xsd bookstore.xml
